@@ -12,7 +12,12 @@ Sales is also asking what this customer's roadmap might look like if they extend
 
 ## Datasets shipped
 
-The repo ships pre-computed model outputs and per-sample scores in `data/slim/`, plus per-benchmark metadata in `data/metadata/`. You do not need to run live inference.
+The repo ships pre-computed model outputs under `Evals/<part>/predictions/` and the
+matching per-sample scores under the sibling `Evals/<part>/reviews/` directory
+(`Evals/Part 1/` for LiveCodeBench + AA-LCR, `Evals/MMMU/` for MMMU). Predictions and
+reviews join on the `index` field. Per-sample metadata is embedded in the rows
+themselves (in the prediction `metadata` field and the review `sample_score`), not in a
+separate file. You do not need to run live inference.
 
 | Benchmark | Customer capability | Samples shipped | Models | Score source |
 |---|---|---|---|---|

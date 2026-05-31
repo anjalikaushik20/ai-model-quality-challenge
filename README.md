@@ -13,8 +13,8 @@ set of **forbidden trivial baselines** that will not pass the rubric.
 |---|---|
 | `Task1_Performance.md` | Task 1 spec — performance UI for customer + internal audiences |
 | `Task2_Model_Quality.md` | Task 2 spec — benchmark/eval pruning inside `evalscope` |
-| `perf_data.zip` | Task 1 data — perf projections, Models A–L × 7 traffic profiles (`.xlsx`) |
-| `Evals/` | Task 2 data — model outputs + per-sample scores (LiveCodeBench, AA-LCR, MMMU) |
+| `perf_data.zip` | Task 1 data — perf projections, Models A–K × 7 traffic profiles (`.xlsx`) |
+| `Evals/` | Task 2 data — model outputs (`predictions/`) + per-sample scores (`reviews/`) for LiveCodeBench, AA-LCR, MMMU |
 
 > **Git LFS:** the files under `Evals/` are stored via [Git LFS](https://git-lfs.github.com/).
 > Install it (`git lfs install`) before cloning, or the `.jsonl` files will appear as

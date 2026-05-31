@@ -28,9 +28,9 @@ Build a UI that lets the two audiences above answer their questions from the shi
 
 These will not pass the rubric. We will check.
 
-- Static HTML dump of the JSONL or a single big table with no audience differentiation.
+- Static HTML dump of the `.xlsx` or a single big table with no audience differentiation.
 - A UI that shows every column to every audience and calls it "configurable."
-- Hard-coded views or copy that only work for the specific models in `data/perf/`.
+- Hard-coded views or copy that only work for the specific models in `perf_data.zip`.
 
 ## What to submit
 
