@@ -32,8 +32,9 @@ a customer/PM who needs a **go/no-go** signal, and an internal engineer who need
 Run contract: document your own install and launch steps in your README — a reviewer
 will clone and follow them. Your choice of framework and packaging. **Also deploy it:**
 ship a publicly reachable URL (a free host is fine — Vercel, Netlify, Cloudflare Pages,
-GitHub Pages, …) so a reviewer can click through without cloning. See
-[`Task1_Performance.md`](./Task1_Performance.md#deploying-for-free).
+GitHub Pages, …) so a reviewer can click through without cloning, and let them **upload
+one or more perf sweeps to render and compare the views live** (we'll test it with a new
+model). See [`Task1_Performance.md`](./Task1_Performance.md#deploying-for-free).
 
 ### Task 2 — Benchmark Compression for a Real Customer
 Prune coding (LiveCodeBench), long-context (AA-LCR), and (forward-looking) multimodal
@@ -66,7 +67,9 @@ Your submission **must** include:
    - For Task 2, pin the `evalscope` commit SHA you developed against in your fork's README.
 
 2. **A live URL for the Task 1 UI** — **required**.
-   - A publicly reachable link to your deployed frontend, running the shipped data.
+   - A publicly reachable link to your deployed frontend where a reviewer can **upload one
+     or more perf sweeps, compare them, and get the views** (the shipped sweeps may be
+     pre-loaded as a sample).
    - Put it at the top of your README **and paste it into the submission form above**.
    - A free host is expected — see
      [`Task1_Performance.md`](./Task1_Performance.md#deploying-for-free) for options.

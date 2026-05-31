@@ -16,13 +16,21 @@ You decide how to serve both audiences. One UI with two views, two separate UIs,
 
 ## The challenge
 
-Build a UI that lets the two audiences above answer their questions from the shipped data. You decide what data to provide and what UI to use
+Build a **tool, not a one-off page**: a UI where anyone can **upload one or more perf
+sweeps** — the shipped data, or similar sweeps for models we've never seen — and
+immediately get the two audience views below. Uploading **multiple sweeps at once is the
+common case**: both audiences need to **compare models side by side** (which is fast
+enough? where do they diverge?), so comparison across the uploaded set is a first-class
+view, not an afterthought. The sweeps we ship are a sample, not the payload; treat the
+file/column shape as the contract and render any conforming sweep. You decide what to
+surface for each audience and what the UI looks like.
 
 ## Hard requirements
 
 - **Documented launch**. Bringing up the UI should be straightforward from a clean clone. Document your install and launch steps in your README — a reviewer will follow them.
-- **Live deployed frontend**. In addition to the source, ship a **publicly reachable URL** where the UI is already running, so a reviewer can click through it without cloning or installing anything. A free host is expected — see [Deploying for free](#deploying-for-free). The deployed build must serve the same data as the repo; don't ship a stripped-down demo.
-- **Defensible for a twelfth model**. We will mentally substitute a `Model L` (or drop in a new `Model_L_profile_<N>/Model L profile <N>.xlsx`) and see if your design still works. Hard-coded model lists or hand-tuned views that only work for the shipped letters will be marked down.
+- **Live deployed frontend**. In addition to the source, ship a **publicly reachable URL** where the UI is already running, so a reviewer can click through it without cloning or installing anything. A free host is expected — see [Deploying for free](#deploying-for-free).
+- **Upload to render, and compare**. Upload is the core flow, not an add-on. A reviewer must be able to **upload one or many perf sweeps** — a single model's set, or several models at once — and see the views render **live, with no rebuild and no code changes**. When more than one model is uploaded, the UI must let both audiences **compare them against each other**, not just view them one at a time. Parsing happens in the app (client- or server-side); the `Model_<X>_profile_<N>/...xlsx` file-and-column shape is the only contract you can rely on. Pre-loading the shipped sweeps as a sample is fine, but the deployed UI must accept fresh uploads as a first-class path, not a dev-only script.
+- **Defensible for a twelfth model**. We will exercise the upload with a brand-new `Model L` (`Model_L_profile_<N>/Model L profile <N>.xlsx`) — a sweep that isn't in the repo — and expect it to render correctly with **zero code edits**. Hard-coded model lists or hand-tuned views that only work for the shipped letters will be marked down.
 
 
 ## Forbidden trivial baselines
@@ -32,6 +40,7 @@ These will not pass the rubric. We will check.
 - Static HTML dump of the `.xlsx` or a single big table with no audience differentiation.
 - A UI that shows every column to every audience and calls it "configurable."
 - Hard-coded views or copy that only work for the specific models in `perf_data.zip`.
+- "Upload" that really means re-running a build script or editing a config to bake the data in — the deployed UI must ingest uploaded `.xlsx` and render without a rebuild.
 
 ## What to submit
 
@@ -44,10 +53,10 @@ README — a reviewer will clone and follow them. Your choice of framework and p
 
 ### 2. Live URL
 
-A **publicly reachable link** to the deployed UI, running the shipped data. Put it at the
-top of your README **and paste it into the submission form** (link in the root README). A
-reviewer should be able to open it and use it without cloning or installing anything.
-Hosting on a free tier is fine and expected.
+A **publicly reachable link** to the deployed UI. Put it at the top of your README **and
+paste it into the submission form** (link in the root README). A reviewer should be able to
+open it, **upload one or more perf sweeps, compare them, and get the views** — no cloning
+or installing. Hosting on a free tier is fine and expected.
 
 #### Deploying for free
 
