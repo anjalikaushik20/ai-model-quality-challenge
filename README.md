@@ -30,7 +30,10 @@ a customer/PM who needs a **go/no-go** signal, and an internal engineer who need
 **sanity-check** a projection. See [`Task1_Performance.md`](./Task1_Performance.md).
 
 Run contract: document your own install and launch steps in your README — a reviewer
-will clone and follow them. Your choice of framework and packaging.
+will clone and follow them. Your choice of framework and packaging. **Also deploy it:**
+ship a publicly reachable URL (a free host is fine — Vercel, Netlify, Cloudflare Pages,
+GitHub Pages, …) so a reviewer can click through without cloning. See
+[`Task1_Performance.md`](./Task1_Performance.md#deploying-for-free).
 
 ### Task 2 — Benchmark Compression for a Real Customer
 Prune coding (LiveCodeBench), long-context (AA-LCR), and (forward-looking) multimodal
@@ -62,7 +65,14 @@ Your submission **must** include:
    - Make it runnable from the instructions above — a reviewer will clone and run it.
    - For Task 2, pin the `evalscope` commit SHA you developed against in your fork's README.
 
-2. **Video walkthrough(s)** explaining your work — **required**.
+2. **A live URL for the Task 1 UI** — **required**.
+   - A publicly reachable link to your deployed frontend, running the shipped data.
+   - Put it at the top of your README **and paste it into the submission form above**.
+   - A free host is expected — see
+     [`Task1_Performance.md`](./Task1_Performance.md#deploying-for-free) for options.
+   - The repo stays private; only the deployed UI is public (the perf data is synthetic).
+
+3. **Video walkthrough(s)** explaining your work — **required**.
    - Task 1: a ≤5-minute video covering the questions in `Task1_Performance.md`
      (what you cut and why, framework chosen vs ruled out, your assumptions, and your
      read on the model sizes / profile use-cases).
@@ -70,4 +80,4 @@ Your submission **must** include:
    - Link the video(s) in the form (Loom, Drive, YouTube-unlisted, etc.). Make sure
      reviewers can actually open the link.
 
-A submission without a private repo **and** video(s) is incomplete.
+A submission without a private repo, a live Task 1 URL, **and** video(s) is incomplete.

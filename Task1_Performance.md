@@ -21,6 +21,7 @@ Build a UI that lets the two audiences above answer their questions from the shi
 ## Hard requirements
 
 - **Documented launch**. Bringing up the UI should be straightforward from a clean clone. Document your install and launch steps in your README — a reviewer will follow them.
+- **Live deployed frontend**. In addition to the source, ship a **publicly reachable URL** where the UI is already running, so a reviewer can click through it without cloning or installing anything. A free host is expected — see [Deploying for free](#deploying-for-free). The deployed build must serve the same data as the repo; don't ship a stripped-down demo.
 - **Defensible for a twelfth model**. We will mentally substitute a `Model L` (or drop in a new `Model_L_profile_<N>/Model L profile <N>.xlsx`) and see if your design still works. Hard-coded model lists or hand-tuned views that only work for the shipped letters will be marked down.
 
 
@@ -34,14 +35,36 @@ These will not pass the rubric. We will check.
 
 ## What to submit
 
-Two things.
+Three things.
 
 ### 1. Code
 
 A link to (or zip of) your project. Document your install and launch steps in your
 README — a reviewer will clone and follow them. Your choice of framework and packaging.
 
-### 2. Video Explanation (5 min max)
+### 2. Live URL
+
+A **publicly reachable link** to the deployed UI, running the shipped data. Put it at the
+top of your README **and paste it into the submission form** (link in the root README). A
+reviewer should be able to open it and use it without cloning or installing anything.
+Hosting on a free tier is fine and expected.
+
+#### Deploying for free
+
+You don't need to pay for hosting. Any of these have a no-cost tier that comfortably
+covers this project — pick whichever fits your stack:
+
+- **[Vercel](https://vercel.com)** — best for React/Next/Vite SPAs; connect the repo and it builds and deploys on push. *(Recommended starting point.)*
+- **[Netlify](https://netlify.com)** — same idea, framework-agnostic; drag-and-drop a build folder or connect the repo.
+- **[Cloudflare Pages](https://pages.cloudflare.com)** — generous free static hosting with a global edge.
+- **[GitHub Pages](https://pages.github.com)** — zero extra accounts if your repo is already on GitHub; good for a static build.
+- **[Render](https://render.com)** or **[Fly.io](https://fly.io)** — if your UI needs a small backend/server rather than a static bundle.
+- **[Streamlit Community Cloud](https://streamlit.io/cloud)** or **[Hugging Face Spaces](https://huggingface.co/spaces)** — if you build a Python/Streamlit/Gradio app instead of a JS frontend.
+
+Keep the deployment in sync with the repo, and make sure the link stays live through the
+review window.
+
+### 3. Video Explanation (5 min max)
 Create a video where you explain
 - What problem did you understand yourself to be solving for each audience? What did you cut and why?
 - What framework did you pick and what did you rule out?
