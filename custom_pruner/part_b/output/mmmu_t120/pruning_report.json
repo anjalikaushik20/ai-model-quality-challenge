@@ -1,0 +1,20 @@
+{
+  "benchmark": "mmmu",
+  "full_size": 360,
+  "pruned_size": 120,
+  "compression_ratio": 0.3333,
+  "target_size": 120,
+  "stratum_counts": {
+    "easy": 108,
+    "medium": 173,
+    "hard": 79
+  },
+  "stratum_budgets": {
+    "easy": 36,
+    "medium": 58,
+    "hard": 26
+  },
+  "model_abilities": {
+    "glm-4.5v-fp8": 0.6861
+  }
+}

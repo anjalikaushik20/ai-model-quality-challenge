@@ -1,0 +1,71 @@
+Running LiveCodeBench pruner  (target=auto)
+19:19:27  INFO      Benchmark   : live_code_bench_v5
+19:19:27  INFO      Evals dir   : /data/akaush39/ai-model-quality-challenge/Evals/Part 1
+19:19:27  INFO      Output dir  : /data/akaush39/ai-model-quality-challenge/custom_pruner/output/lcb
+19:19:27  INFO      Target size : 72
+19:19:27  INFO      ── Fitting pruner ──
+19:19:27  INFO      Loaded 315 scores  gpt-oss-120b / live_code_bench_v5
+19:19:27  INFO      Loaded 315 scores  kimi-k2.5 / live_code_bench_v5
+19:19:27  INFO      Loaded 315 scores  minimax-m2.5 / live_code_bench_v5
+19:19:28  INFO      [live_code_bench_v5] Fitting on 315 items, 3 models
+19:19:28  INFO        easy  :  158 items  pass_rate [1.00, 1.00]
+19:19:28  INFO        medium:  111 items  pass_rate [0.33, 0.67]
+19:19:28  INFO        hard  :   46 items  pass_rate [0.00, 0.00]
+19:19:28  INFO        Budget: {'easy': 36, 'medium': 25, 'hard': 11}
+19:19:28  INFO      Loading embeddings from cache: /data/akaush39/ai-model-quality-challenge/custom_pruner/output/lcb/.emb_cache/emb_ffc1cfe207531add.npy
+19:19:28  INFO      Loading embeddings from cache: /data/akaush39/ai-model-quality-challenge/custom_pruner/output/lcb/.emb_cache/emb_dc093fbaa6d29241.npy
+19:19:28  INFO      Loading embeddings from cache: /data/akaush39/ai-model-quality-challenge/custom_pruner/output/lcb/.emb_cache/emb_c6ed6b1994e35828.npy
+19:19:28  INFO      Selected 72/315 items (22.9% of full benchmark)
+19:19:28  INFO      ── Saving artefacts ──
+19:19:28  INFO      Artifacts written to /data/akaush39/ai-model-quality-challenge/custom_pruner/output/lcb
+19:19:28  INFO      ── Running validation ──
+19:19:28  INFO      [live_code_bench_v5] Fitting on 315 items, 2 models
+19:19:28  INFO        easy  :  170 items  pass_rate [1.00, 1.00]
+19:19:28  INFO        medium:   53 items  pass_rate [0.50, 0.50]
+19:19:28  INFO        hard  :   92 items  pass_rate [0.00, 0.00]
+19:19:28  INFO        Budget: {'easy': 39, 'medium': 12, 'hard': 21}
+19:19:28  INFO      Selected 72/315 items (22.9% of full benchmark)
+19:19:28  INFO      [live_code_bench_v5] Fitting on 315 items, 2 models
+19:19:28  INFO        easy  :  178 items  pass_rate [1.00, 1.00]
+19:19:28  INFO        medium:   80 items  pass_rate [0.50, 0.50]
+19:19:28  INFO        hard  :   57 items  pass_rate [0.00, 0.00]
+19:19:28  INFO        Budget: {'easy': 41, 'medium': 18, 'hard': 13}
+19:19:28  INFO      Selected 72/315 items (22.9% of full benchmark)
+19:19:28  INFO      [live_code_bench_v5] Fitting on 315 items, 2 models
+19:19:28  INFO        easy  :  175 items  pass_rate [1.00, 1.00]
+19:19:28  INFO        medium:   89 items  pass_rate [0.50, 0.50]
+19:19:28  INFO        hard  :   51 items  pass_rate [0.00, 0.00]
+19:19:28  INFO        Budget: {'easy': 40, 'medium': 20, 'hard': 12}
+19:19:29  INFO      Selected 72/315 items (22.9% of full benchmark)
+19:19:29  INFO      Validation report → /data/akaush39/ai-model-quality-challenge/custom_pruner/output/lcb/validation_report.json
+
+── Results ─────────────────────────────────────────
+  Full size        : 315
+  Pruned size      : 72
+  Compression      : 22.9%
+
+  Score preservation  (simple mean)
+    Mean |error|   : 0.0775
+    Max  |error|   : 0.0821
+    gpt-oss-120b            full=0.765  pruned=0.847  |err|=0.0821
+    kimi-k2.5               full=0.629  pruned=0.556  |err|=0.0730
+    minimax-m2.5            full=0.619  pruned=0.542  |err|=0.0774
+
+  Ranking
+    Spearman ρ     : 1.0
+    Preserved      : True
+
+  Go/No-Go  (threshold=0.6709)
+    Agreement      : 100.0%
+    ✓ gpt-oss-120b            full=GO      pruned=GO
+    ✓ kimi-k2.5               full=NO-GO   pruned=NO-GO
+    ✓ minimax-m2.5            full=NO-GO   pruned=NO-GO
+
+  LOMO  (mean |error|=0.0342)
+    gpt-oss-120b            full=0.765  pruned=0.708  |err|=0.0567
+    kimi-k2.5               full=0.629  pruned=0.653  |err|=0.0242
+    minimax-m2.5            full=0.619  pruned=0.597  |err|=0.0218
+
+  Difficulty KL     : 0.02104
+────────────────────────────────────────────────────
+

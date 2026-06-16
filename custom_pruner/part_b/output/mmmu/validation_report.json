@@ -1,0 +1,72 @@
+{
+  "benchmark": "mmmu",
+  "full_size": 360,
+  "pruned_size": 42,
+  "compression_ratio": 0.1167,
+  "target_size": 42,
+  "stratum_counts": {
+    "easy": 108,
+    "medium": 173,
+    "hard": 79
+  },
+  "stratum_budgets": {
+    "easy": 13,
+    "medium": 20,
+    "hard": 9
+  },
+  "model_abilities": {
+    "glm-4.5v-fp8": 0.6861
+  },
+  "validation": {
+    "score_preservation": {
+      "per_model": {
+        "glm-4.5v-fp8": {
+          "full": 0.6861,
+          "pruned": 0.6905,
+          "absolute_error": 0.0044
+        }
+      },
+      "mean_absolute_error": 0.0044,
+      "max_absolute_error": 0.0044
+    },
+    "go_nogo": {
+      "threshold": 0.6861,
+      "per_model": {
+        "glm-4.5v-fp8": {
+          "full_decision": "GO",
+          "pruned_decision": "GO",
+          "agrees": true
+        }
+      },
+      "agreement_rate": 1.0,
+      "all_agree": true
+    },
+    "kl_difficulty": {
+      "kl_divergence": 4e-05,
+      "full_histogram": [
+        113,
+        0,
+        0,
+        0,
+        247
+      ],
+      "pruned_histogram": [
+        13,
+        0,
+        0,
+        0,
+        29
+      ],
+      "bin_edges": [
+        0.0,
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1.0
+      ]
+    },
+    "threshold": 0.6861111111111111,
+    "note": "ranking and LOMO omitted \u2014 undefined for a single model"
+  }
+}

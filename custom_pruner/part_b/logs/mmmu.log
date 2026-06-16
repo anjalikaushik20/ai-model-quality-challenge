@@ -1,0 +1,55 @@
+Running MMMU pruner  (target=42)
+19:19:40  INFO      Benchmark   : mmmu
+19:19:40  INFO      Model       : glm-4.5v-fp8
+19:19:40  INFO      Evals dir   : /data/akaush39/ai-model-quality-challenge/Evals/MMMU
+19:19:40  INFO      Output dir  : /data/akaush39/ai-model-quality-challenge/custom_pruner/part_b/output/mmmu
+19:19:40  INFO      Target size : 42
+19:19:40  INFO      ── Fitting pruner ──
+19:19:40  INFO      Loading subject 'Biology'
+19:19:41  INFO      Loading subject 'Diagnostics_and_Laboratory_Medicine'
+19:19:41  INFO      Loading subject 'Economics'
+19:19:41  INFO      Loading subject 'Electronics'
+19:19:41  INFO      Loading subject 'Energy_and_Power'
+19:19:41  INFO      Loading subject 'Finance'
+19:19:41  INFO      Loading subject 'Geography'
+19:19:41  INFO      Loading subject 'History'
+19:19:41  INFO      Loading subject 'Literature'
+19:19:41  INFO      Loading subject 'Manage'
+19:19:41  INFO      Loading subject 'Marketing'
+19:19:41  INFO      Loading subject 'Materials'
+19:19:41  INFO      Loaded 360 MMMU items for model 'glm-4.5v-fp8'
+19:19:41  INFO      [mmmu] Fitting on 360 items, 1 model(s)
+19:19:41  INFO        easy  :  108 items  pass_rate [0.00, 1.00]
+19:19:41  INFO        medium:  173 items  pass_rate [0.00, 1.00]
+19:19:41  INFO        hard  :   79 items  pass_rate [0.00, 1.00]
+19:19:41  INFO        Feature scales: subject=3.585 (log2(12)), img_type=2.585 (log2(6))
+19:19:41  INFO        Budget: {'easy': 13, 'medium': 20, 'hard': 9}
+19:19:41  INFO      Loading embeddings from cache: /data/akaush39/ai-model-quality-challenge/custom_pruner/part_b/output/mmmu/.emb_cache/emb_92c7ecb4712caece.npy
+19:19:41  INFO      Loading embeddings from cache: /data/akaush39/ai-model-quality-challenge/custom_pruner/part_b/output/mmmu/.emb_cache/emb_1df4f8c3d0195ee7.npy
+19:19:41  INFO      Loading embeddings from cache: /data/akaush39/ai-model-quality-challenge/custom_pruner/part_b/output/mmmu/.emb_cache/emb_d65afa8fd6e9db9b.npy
+19:19:41  INFO      Selected 42/360 items (11.7% of full benchmark)
+19:19:41  INFO      ── Saving artefacts ──
+19:19:41  INFO      Artifacts written to /data/akaush39/ai-model-quality-challenge/custom_pruner/part_b/output/mmmu
+19:19:41  INFO      ── Running validation ──
+19:19:41  INFO      Validation report → /data/akaush39/ai-model-quality-challenge/custom_pruner/part_b/output/mmmu/validation_report.json
+
+── Results ─────────────────────────────────────────
+  Full size        : 360
+  Pruned size      : 42
+  Compression      : 11.7%
+
+  Stratum sizes (full)  : {'easy': 108, 'medium': 173, 'hard': 79}
+  Stratum budgets       : {'easy': 13, 'medium': 20, 'hard': 9}
+
+  Score preservation
+    Mean |error|   : 0.0044
+    Max  |error|   : 0.0044
+    glm-4.5v-fp8                full=0.686  pruned=0.691  |err|=0.0044
+
+  Go/No-Go  (threshold=0.6861)
+    Agreement      : 100.0%
+    ✓ glm-4.5v-fp8                full=GO      pruned=GO
+
+  Difficulty KL     : 4e-05
+────────────────────────────────────────────────────
+

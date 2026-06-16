@@ -1,0 +1,22 @@
+{
+  "benchmark": "live_code_bench_v5",
+  "full_size": 315,
+  "pruned_size": 72,
+  "compression_ratio": 0.2286,
+  "target_size": 72,
+  "stratum_counts": {
+    "easy": 158,
+    "medium": 111,
+    "hard": 46
+  },
+  "stratum_budgets": {
+    "easy": 36,
+    "medium": 25,
+    "hard": 11
+  },
+  "model_abilities": {
+    "gpt-oss-120b": 0.7651,
+    "kimi-k2.5": 0.6286,
+    "minimax-m2.5": 0.619
+  }
+}

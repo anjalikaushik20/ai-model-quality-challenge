@@ -1,0 +1,134 @@
+{
+  "benchmark": "live_code_bench_v5",
+  "full_size": 315,
+  "pruned_size": 72,
+  "compression_ratio": 0.2286,
+  "target_size": 72,
+  "stratum_counts": {
+    "easy": 158,
+    "medium": 111,
+    "hard": 46
+  },
+  "stratum_budgets": {
+    "easy": 36,
+    "medium": 25,
+    "hard": 11
+  },
+  "model_abilities": {
+    "gpt-oss-120b": 0.7651,
+    "kimi-k2.5": 0.6286,
+    "minimax-m2.5": 0.619
+  },
+  "validation": {
+    "score_preservation": {
+      "per_model": {
+        "gpt-oss-120b": {
+          "full": 0.7651,
+          "pruned": 0.8472,
+          "absolute_error": 0.0821
+        },
+        "kimi-k2.5": {
+          "full": 0.6286,
+          "pruned": 0.5556,
+          "absolute_error": 0.073
+        },
+        "minimax-m2.5": {
+          "full": 0.619,
+          "pruned": 0.5417,
+          "absolute_error": 0.0774
+        }
+      },
+      "mean_absolute_error": 0.0775,
+      "max_absolute_error": 0.0821
+    },
+    "ranking": {
+      "spearman_rho": 1.0,
+      "spearman_p": 0.0,
+      "ranking_preserved": true,
+      "rank_swaps": [],
+      "full_ranking": [
+        "gpt-oss-120b",
+        "kimi-k2.5",
+        "minimax-m2.5"
+      ],
+      "pruned_ranking": [
+        "gpt-oss-120b",
+        "kimi-k2.5",
+        "minimax-m2.5"
+      ]
+    },
+    "go_nogo": {
+      "threshold": 0.6709,
+      "per_model": {
+        "gpt-oss-120b": {
+          "full_decision": "GO",
+          "pruned_decision": "GO",
+          "agrees": true
+        },
+        "kimi-k2.5": {
+          "full_decision": "NO-GO",
+          "pruned_decision": "NO-GO",
+          "agrees": true
+        },
+        "minimax-m2.5": {
+          "full_decision": "NO-GO",
+          "pruned_decision": "NO-GO",
+          "agrees": true
+        }
+      },
+      "agreement_rate": 1.0,
+      "all_agree": true
+    },
+    "kl_difficulty": {
+      "kl_divergence": 0.02104,
+      "full_histogram": [
+        46,
+        62,
+        0,
+        49,
+        158
+      ],
+      "pruned_histogram": [
+        11,
+        18,
+        0,
+        7,
+        36
+      ],
+      "bin_edges": [
+        0.0,
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1.0
+      ]
+    },
+    "lomo": {
+      "folds": [
+        {
+          "held_out": "gpt-oss-120b",
+          "full_score": 0.7651,
+          "pruned_score": 0.7083,
+          "absolute_error": 0.0567
+        },
+        {
+          "held_out": "kimi-k2.5",
+          "full_score": 0.6286,
+          "pruned_score": 0.6528,
+          "absolute_error": 0.0242
+        },
+        {
+          "held_out": "minimax-m2.5",
+          "full_score": 0.619,
+          "pruned_score": 0.5972,
+          "absolute_error": 0.0218
+        }
+      ],
+      "mean_absolute_error": 0.0342,
+      "max_absolute_error": 0.0567,
+      "note": "N=3 LOMO is suggestive of generalisation; validate on public leaderboard scores for stronger evidence."
+    },
+    "threshold": 0.6708994708994709
+  }
+}

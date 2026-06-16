@@ -1,0 +1,71 @@
+Running AA-LCR pruner  (target=auto)
+19:19:33  INFO      Benchmark   : aa_lcr
+19:19:33  INFO      Evals dir   : /data/akaush39/ai-model-quality-challenge/Evals/Part 1
+19:19:33  INFO      Output dir  : /data/akaush39/ai-model-quality-challenge/custom_pruner/output/aalcr
+19:19:33  INFO      Target size : 24
+19:19:33  INFO      ── Fitting pruner ──
+19:19:33  INFO      Loaded 100 scores  gpt-oss-120b / aa_lcr
+19:19:33  INFO      Loaded 100 scores  kimi-k2.5 / aa_lcr
+19:19:33  INFO      Loaded 100 scores  minimax-m2.5 / aa_lcr
+19:19:33  INFO      [aa_lcr] Fitting on 100 items, 3 models
+19:19:33  INFO        easy  :   36 items  pass_rate [1.00, 1.00]
+19:19:33  INFO        medium:   43 items  pass_rate [0.33, 0.67]
+19:19:33  INFO        hard  :   21 items  pass_rate [0.00, 0.00]
+19:19:33  INFO        Budget: {'easy': 9, 'medium': 10, 'hard': 5}
+19:19:33  INFO      Loading embeddings from cache: /data/akaush39/ai-model-quality-challenge/custom_pruner/output/aalcr/.emb_cache/emb_26a14a5f88d8b156.npy
+19:19:33  INFO      Loading embeddings from cache: /data/akaush39/ai-model-quality-challenge/custom_pruner/output/aalcr/.emb_cache/emb_f139f192c3c30f21.npy
+19:19:33  INFO      Loading embeddings from cache: /data/akaush39/ai-model-quality-challenge/custom_pruner/output/aalcr/.emb_cache/emb_f166408e805e6922.npy
+19:19:33  INFO      Selected 24/100 items (24.0% of full benchmark)
+19:19:33  INFO      ── Saving artefacts ──
+19:19:33  INFO      Artifacts written to /data/akaush39/ai-model-quality-challenge/custom_pruner/output/aalcr
+19:19:33  INFO      ── Running validation ──
+19:19:33  INFO      [aa_lcr] Fitting on 100 items, 2 models
+19:19:33  INFO        easy  :   54 items  pass_rate [1.00, 1.00]
+19:19:33  INFO        medium:   22 items  pass_rate [0.50, 0.50]
+19:19:33  INFO        hard  :   24 items  pass_rate [0.00, 0.00]
+19:19:33  INFO        Budget: {'easy': 13, 'medium': 5, 'hard': 6}
+19:19:33  INFO      Selected 24/100 items (24.0% of full benchmark)
+19:19:33  INFO      [aa_lcr] Fitting on 100 items, 2 models
+19:19:33  INFO        easy  :   39 items  pass_rate [1.00, 1.00]
+19:19:33  INFO        medium:   34 items  pass_rate [0.50, 0.50]
+19:19:33  INFO        hard  :   27 items  pass_rate [0.00, 0.00]
+19:19:33  INFO        Budget: {'easy': 9, 'medium': 9, 'hard': 6}
+19:19:33  INFO      Selected 24/100 items (24.0% of full benchmark)
+19:19:33  INFO      [aa_lcr] Fitting on 100 items, 2 models
+19:19:33  INFO        easy  :   42 items  pass_rate [1.00, 1.00]
+19:19:33  INFO        medium:   30 items  pass_rate [0.50, 0.50]
+19:19:33  INFO        hard  :   28 items  pass_rate [0.00, 0.00]
+19:19:33  INFO        Budget: {'easy': 10, 'medium': 7, 'hard': 7}
+19:19:33  INFO      Selected 24/100 items (24.0% of full benchmark)
+19:19:33  INFO      Validation report → /data/akaush39/ai-model-quality-challenge/custom_pruner/output/aalcr/validation_report.json
+
+── Results ─────────────────────────────────────────
+  Full size        : 100
+  Pruned size      : 24
+  Compression      : 24.0%
+
+  Score preservation  (simple mean)
+    Mean |error|   : 0.1017
+    Max  |error|   : 0.1317
+    gpt-oss-120b            full=0.480  pruned=0.375  |err|=0.1050
+    kimi-k2.5               full=0.660  pruned=0.792  |err|=0.1317
+    minimax-m2.5            full=0.640  pruned=0.708  |err|=0.0683
+
+  Ranking
+    Spearman ρ     : 1.0
+    Preserved      : True
+
+  Go/No-Go  (threshold=0.5933)
+    Agreement      : 100.0%
+    ✓ gpt-oss-120b            full=NO-GO   pruned=NO-GO
+    ✓ kimi-k2.5               full=GO      pruned=GO
+    ✓ minimax-m2.5            full=GO      pruned=GO
+
+  LOMO  (mean |error|=0.0278)
+    gpt-oss-120b            full=0.480  pruned=0.500  |err|=0.0200
+    kimi-k2.5               full=0.660  pruned=0.708  |err|=0.0483
+    minimax-m2.5            full=0.640  pruned=0.625  |err|=0.0150
+
+  Difficulty KL     : 0.03445
+────────────────────────────────────────────────────
+

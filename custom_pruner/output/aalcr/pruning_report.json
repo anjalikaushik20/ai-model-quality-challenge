@@ -1,0 +1,22 @@
+{
+  "benchmark": "aa_lcr",
+  "full_size": 100,
+  "pruned_size": 24,
+  "compression_ratio": 0.24,
+  "target_size": 24,
+  "stratum_counts": {
+    "easy": 36,
+    "medium": 43,
+    "hard": 21
+  },
+  "stratum_budgets": {
+    "easy": 9,
+    "medium": 10,
+    "hard": 5
+  },
+  "model_abilities": {
+    "gpt-oss-120b": 0.48,
+    "kimi-k2.5": 0.66,
+    "minimax-m2.5": 0.64
+  }
+}
