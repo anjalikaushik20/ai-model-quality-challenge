@@ -839,7 +839,7 @@ def compute_scaling_check(df, new_models=None):
 # Engineer — config sensitivity
 # ---------------------------------------------------------------------------
 
-def build_engineer_chart(df, sweep_col, new_models=None):
+def build_engineer_chart(df, sweep_col, new_mp=None):
     has_tp  = THROUGHPUT_COL in df.columns
     has_lat = LATENCY_COL    in df.columns
     if (not has_tp and not has_lat) or sweep_col is None:
@@ -848,18 +848,23 @@ def build_engineer_chart(df, sweep_col, new_models=None):
     df = df.copy()
     df["_mp"] = mp_label(df)
 
-    # New-model labels first so they get vivid palette colors and top legend slots
+    def _label_is_new(label):
+        parts = label.split(" / ", 1)
+        m = parts[0]
+        p = parts[1] if len(parts) > 1 else "—"
+        return (m, p) in new_mp
+
+    # New (model, profile) labels first — vivid palette colors and top legend slots
     all_labels = sorted(df["_mp"].unique())
-    if new_models:
-        new_labels = [l for l in all_labels if l.split(" / ")[0] in new_models]
-        old_labels = [l for l in all_labels if l.split(" / ")[0] not in new_models]
+    if new_mp:
+        new_labels = [l for l in all_labels if _label_is_new(l)]
+        old_labels = [l for l in all_labels if not _label_is_new(l)]
         models = new_labels + old_labels
     else:
         models = all_labels
 
     def _trace_style(label, idx):
-        base_model = label.split(" / ")[0]
-        is_new = new_models and base_model in new_models
+        is_new = new_mp and _label_is_new(label)
         return dict(
             color=PALETTE[idx % len(PALETTE)],
             width=3 if is_new else 1.5,
@@ -915,13 +920,20 @@ def build_engineer_chart(df, sweep_col, new_models=None):
 # Engineer — PCA + t-SNE
 # ---------------------------------------------------------------------------
 
-def _compute_tsne(df, new_models=None):
-    """t-SNE 2D scatter coloured by model; new models shown as gold stars."""
+def _compute_tsne(df, new_mp=None):
+    """t-SNE 2D scatter coloured by model; newly uploaded (model, profile) shown as gold stars."""
     available = [c for c in PCA_FEATURE_COLS if c in df.columns]
     if len(available) < 3:
         return None
 
-    sub = df[available + ["Model", "Profile", "Batch Size"]].dropna(subset=available).copy()
+    # Keep rows that have at least half the feature columns non-null,
+    # then fill the rest with per-column medians so partial rows are still plotted.
+    min_cols = max(3, len(available) // 2)
+    extra_cols = ["Model", "Profile"] + (["Batch Size"] if "Batch Size" in df.columns else [])
+    sub = df[available + extra_cols].copy()
+    sub = sub.dropna(subset=available, thresh=min_cols)
+    for col in available:
+        sub[col] = sub[col].fillna(sub[col].median())
     if len(sub) < 4:
         return None
 
@@ -933,23 +945,29 @@ def _compute_tsne(df, new_models=None):
         max_iter=1000, init="pca",
     ).fit_transform(X_scaled)
 
-    plot_df = sub[["Model", "Profile", "Batch Size"]].copy()
+    plot_df = sub[["Model", "Profile"]].copy()
+    if "Batch Size" in sub.columns:
+        plot_df["Batch Size"] = sub["Batch Size"]
     plot_df["tSNE-1"] = tsne_coords[:, 0]
     plot_df["tSNE-2"] = tsne_coords[:, 1]
 
+    hover = {"Batch Size": True} if "Batch Size" in plot_df.columns else {}
     fig = px.scatter(
         plot_df, x="tSNE-1", y="tSNE-2",
         color="Model", symbol="Profile",
-        hover_data={"Batch Size": True},
+        hover_data=hover,
         color_discrete_sequence=px.colors.qualitative.Alphabet,
         title="t-SNE — Models clustered by performance similarity",
         height=580,
     )
 
-    new_models = new_models or set()
-    if new_models:
+    new_mp = new_mp or set()
+    if new_mp:
         for trace in fig.data:
-            if trace.name.split(",")[0].strip() in new_models:
+            parts = trace.name.split(",", 1)
+            m = parts[0].strip()
+            p = parts[1].strip() if len(parts) > 1 else "—"
+            if (m, p) in new_mp:
                 trace.marker.size   = 18
                 trace.marker.symbol = "star"
                 trace.marker.line   = dict(width=2, color="#FFD700")
@@ -959,10 +977,11 @@ def _compute_tsne(df, new_models=None):
         text="Points close together = similar performance fingerprint across all metrics",
         showarrow=False, font=dict(size=10, color="gray"), xanchor="left", yanchor="top",
     )]
-    if new_models:
+    if new_mp:
+        label = ", ".join(f"{m} {p}" for m, p in sorted(new_mp))
         annotations.append(dict(
             x=0.01, y=0.93, xref="paper", yref="paper",
-            text=f"★ Gold star = newly uploaded model ({', '.join(sorted(new_models))})",
+            text=f"★ Gold star = newly uploaded ({label})",
             showarrow=False, font=dict(size=10, color="#b8860b"), xanchor="left", yanchor="top",
         ))
 
@@ -974,7 +993,7 @@ def _compute_tsne(df, new_models=None):
 # Shared analysis pipeline
 # ---------------------------------------------------------------------------
 
-def _run_analysis(df, thresh_tp=0, thresh_gen=0, thresh_ttft=0, new_models=None, run_tsne=False):
+def _run_analysis(df, thresh_tp=0, thresh_gen=0, thresh_ttft=0, new_mp=None, run_tsne=False):
     thresholds = {
         THROUGHPUT_COL:           thresh_tp   or 0,
         "Gen Speed (t/s/user)":   thresh_gen  or 0,
@@ -982,10 +1001,13 @@ def _run_analysis(df, thresh_tp=0, thresh_gen=0, thresh_ttft=0, new_models=None,
     }
     sweep_col = detect_sweep_col(df)
 
+    # Derive model-level names for charts that work per-model (not per profile)
+    new_models = {m for m, p in new_mp} if new_mp else None
+
     # Go/no-go evaluation is scoped to newly uploaded models only.
     # When no new models are present, suppress threshold coloring so the banner
     # shows neutral headroom/throughput info instead of a go/no-go verdict.
-    if new_models:
+    if new_mp:
         gonogo_df    = df[df["Model"].isin(new_models)]
         ranking_df   = compute_ranking(gonogo_df, thresholds)
         summary_html = build_summary_html(ranking_df, thresholds)
@@ -1002,8 +1024,8 @@ def _run_analysis(df, thresh_tp=0, thresh_gen=0, thresh_ttft=0, new_models=None,
     metric_comparison = build_metric_comparison(df, new_models=new_models)
 
     scaling_md, scaling_chart, regression_df = compute_scaling_check(df, new_models=new_models)
-    eng_chart  = build_engineer_chart(df.copy(), sweep_col, new_models=new_models)
-    tsne_fig   = _compute_tsne(df, new_models) if run_tsne else None
+    eng_chart  = build_engineer_chart(df.copy(), sweep_col, new_mp=new_mp)
+    tsne_fig   = _compute_tsne(df, new_mp) if run_tsne else None
 
     return (
         summary_html, ranked_bar, pareto_scatter,
@@ -1019,7 +1041,7 @@ def perform_analysis(files, thresh_tp=0, thresh_gen=0, thresh_ttft=0):
         if base is None:
             msg = _BASE_DF_ERR or "No dataset files found in `dataset/`."
             return None, None, "", msg, None, None, None, None, msg, None, None, None, None, None
-        return (base, None, "") + tuple(_run_analysis(base, thresh_tp, thresh_gen, thresh_ttft))
+        return (base, None, "") + tuple(_run_analysis(base, thresh_tp, thresh_gen, thresh_ttft, run_tsne=True))
     try:
         uploaded_df, errors, warnings = read_files(files)
     except Exception as e:
@@ -1033,7 +1055,7 @@ def perform_analysis(files, thresh_tp=0, thresh_gen=0, thresh_ttft=0):
             if errors else "No data found in uploaded files."
         )
         return None, None, validation_html, no_data_msg, None, None, None, None, no_data_msg, None, None, None, None, None
-    new_models = set(uploaded_df["Model"].unique())
+    new_mp = set(zip(uploaded_df["Model"], uploaded_df["Profile"]))
     if base is not None:
         combined = pd.concat([base, uploaded_df], ignore_index=True)
         key_cols = [c for c in ["Model", "Profile", "Batch Size"] if c in combined.columns]
@@ -1041,16 +1063,16 @@ def perform_analysis(files, thresh_tp=0, thresh_gen=0, thresh_ttft=0):
             combined = combined.drop_duplicates(subset=key_cols, keep="last").reset_index(drop=True)
     else:
         combined = uploaded_df
-    return (combined, new_models, validation_html) + tuple(
-        _run_analysis(combined, thresh_tp, thresh_gen, thresh_ttft, new_models, run_tsne=True)
+    return (combined, new_mp, validation_html) + tuple(
+        _run_analysis(combined, thresh_tp, thresh_gen, thresh_ttft, new_mp, run_tsne=True)
     )
 
 
-def apply_thresholds(df, new_models, thresh_tp=0, thresh_gen=0, thresh_ttft=0):
+def apply_thresholds(df, new_mp, thresh_tp=0, thresh_gen=0, thresh_ttft=0):
     if df is None:
         msg = "No data available. Check that dataset files exist in `dataset/`."
         return msg, None, None, None, None, msg, None, None, None, None, None
-    return _run_analysis(df, thresh_tp, thresh_gen, thresh_ttft, new_models or None)
+    return _run_analysis(df, thresh_tp, thresh_gen, thresh_ttft, new_mp or None)
 
 
 def reset_highlights(df, thresh_tp=0, thresh_gen=0, thresh_ttft=0):
